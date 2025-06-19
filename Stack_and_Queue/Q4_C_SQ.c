@@ -112,7 +112,19 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	// 큐를 저장하기 위한 스택 동적 할당
+	Stack *myStack = malloc(sizeof(Stack));
+
+	// 큐에 있는 값이 없어질 때 까지 deque한 값을 스택으로 푸쉬
+	while (!isEmptyQueue(q)) {
+		push(myStack, dequeue(q));
+	}
+	// 스택에 있는 값이 없어질 때 까지 pop한 값을 다시 큐에 추가
+	while (!isEmptyStack(myStack)) {
+		enqueue(q, pop(myStack));
+	}
+	// 메모리 해제
+	free(myStack);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

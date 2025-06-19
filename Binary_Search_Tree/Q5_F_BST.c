@@ -91,7 +91,38 @@ int main()
 
 void postOrderIterativeS2(BSTNode *root)
 {
-	 /* add your code here */
+	// 스택 구조체 동적 할당 및 초기화
+	// 스택에 
+	Stack *myStack1 = malloc(sizeof(Stack));
+	myStack1->top = NULL;
+
+	// 스택 구조체 동적 할당 및 초기화
+	Stack *myStack2 = malloc(sizeof(Stack));
+	myStack2->top = NULL;
+
+	// current: 현재 탐색 중인 노드
+	BSTNode *current = root;
+
+	push(myStack1, root);
+	while (!isEmpty(myStack1)) {
+		current = pop(myStack1);
+		push(myStack2, current);
+
+		if (current->left)
+			push(myStack1, current->left);
+		if (current->right)
+			push(myStack1, current->right);
+	}
+
+	while (!isEmpty(myStack2))
+	{	
+		BSTNode *popNode = pop(myStack2);
+		printf("%d ", popNode->item);
+	}
+	
+	// 스택 메모리 해제
+	free(myStack1);
+	free(myStack2);
 }
 
 /* Given a binary search tree and a key, this function

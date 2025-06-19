@@ -87,7 +87,21 @@ int main()
 
 void RecursiveReverse(ListNode **ptrHead)
 {
-	/* add your code here */
+	if (*ptrHead == NULL || (*ptrHead)->next == NULL) return;
+
+	// 재귀 구조 예시
+	ListNode *first = *ptrHead;
+	ListNode *rest = (*ptrHead)->next;
+
+	// 나머지 리스트를 재귀적으로 뒤집기
+	RecursiveReverse(&rest);
+
+	// 포인터 재배치
+	first->next->next = first;
+	first->next = NULL;
+
+	// 새로운 헤드 설정 (rest는 이제 뒤집힌 리스트의 헤드)
+	*ptrHead = rest;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -99,9 +99,19 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int countOneChildNodes(BTNode *node)
-
 {
-    /* add your code here */
+    // 노드가 NULL이면 리턴 0, 기저 조건 
+    if (node == NULL) return 0;
+
+    // 왼쪽, 오른쪽 서브트리에서 각각 자식 하나인 노드 수 계산
+    int leftCnt = countOneChildNodes(node->left);
+    int rightCnt= countOneChildNodes(node->right);
+
+    // 정확히 한 쪽 자식만 있는 경우 +1
+    if ((node->left == NULL && node->right != NULL) || (node->left != NULL && node->right == NULL)) return leftCnt + rightCnt + 1;
+
+    // 자식이 둘 다 있거나 둘 다 없는 경우: 서브트리 결과만 더해서 반환
+    return leftCnt + rightCnt;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

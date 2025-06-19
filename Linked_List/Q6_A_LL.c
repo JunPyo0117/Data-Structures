@@ -40,7 +40,7 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
-	int c, i, j;
+	int c, i;
 	c = 1;
 
 	LinkedList ll;
@@ -63,7 +63,7 @@ int main()
 		case 1:
 			printf("Input an integer that you want to add to the linked list: ");
 			scanf("%d", &i);
-			j=insertNode(&ll, ll.size, i);
+			insertNode(&ll, ll.size, i);
 			printf("The resulting linked list is: ");
 			printList(&ll);
 			break;
@@ -88,7 +88,31 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+    if (*ptrHead == NULL || (*ptrHead)->next == NULL) return 0;
+	
+	ListNode *cur = *ptrHead;
+	ListNode *maxNode = cur;
+	ListNode *maxPrev = NULL;
+	ListNode *prev = NULL;
+
+	while (cur->next != NULL)
+	{
+		if (cur->item > maxNode->item) {
+			maxNode = cur;
+			maxPrev = prev;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+	
+	if (maxPrev == NULL){
+		return 0;
+	} else {
+		maxPrev->next = maxNode->next;
+		maxNode->next = *ptrHead;
+		*ptrHead = maxNode;
+	}
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

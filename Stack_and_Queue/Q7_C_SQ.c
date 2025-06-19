@@ -52,9 +52,9 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
-	char ch, str[256];
-	int c, i;
-	c = 1;
+	char str[256];
+	// int c, i;
+	int c = 1;
 
 	LinkedList ll;
 	Stack s;
@@ -104,9 +104,59 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
-}
+	// 스택 초기화, head와 size도 초기화 해줘야함, 
+	Stack *myStack = malloc(sizeof(Stack));
+	// myStack->ll.head = NULL;
+	// myStack->ll.size = 0;
 
+	// 입력받은 문자열의 '\0' 까지 반복 {}{}\0
+	while (*expression)
+	{	
+		// 괄호를 시작하는 문자열이면 스택에 추가
+		if (*expression == '(' || *expression == '{' || *expression == '['){
+			push(myStack, *expression);
+		} 
+		// 괄호를 닫는 문자열이면
+		else {
+			// 닫는 괄호인데 스택이 비어있으면, 짝이 맞지 않으므로 not balanced (1 리턴)
+			if (isEmptyStack(myStack)) {
+				return 1;
+			} 
+			// 닫는 괄호와 스택의 top 괄호가 짝이 맞으면 pop
+			if (*expression == ')' && peek(myStack) == '(' || *expression == '}' && peek(myStack) == '{' || *expression == ']' && peek(myStack) == '['){
+				pop(myStack);
+			} 
+			// 짝이 맞지 않으므로 not balance 리턴 1
+			else {
+				return 1;
+			}
+		}
+		// 다음 문자로 이동
+		expression++;
+	}
+
+	// 결과 저장용 변수 
+	int result;
+
+	// 스택이 비어 있으면 balanced (모든 괄호 짝이 맞음), 비어있지 않으면 not balanced, 처음부터 비어있는 건 위에서 처리  
+	if (isEmptyStack(myStack)){
+		result = 0;
+	} else {
+		result = 1;
+	}
+
+	//동적할당한 스택 메모리 프리
+	free(myStack);
+
+	// if (isEmptyStack(myStack)){
+	// 	return 0;
+	// } else {
+	// 	return 1;
+	// }
+
+	// 결과 리턴
+	// return result;
+}
 ////////////////////////////////////////////////////////////
 
 void removeAllItemsFromStack(Stack *s)

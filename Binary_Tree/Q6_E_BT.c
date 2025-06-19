@@ -105,9 +105,15 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
-}
+	if (node == NULL) return;
 
+    if (node->item < m) printf("%d ", node->item);
+	// 왼쪽 서브 트리 재귀
+    printSmallerValues(node->left, m);
+    
+    // 오른쪽 서브 트리 재귀
+    printSmallerValues(node->right, m);
+}
 //////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)

@@ -102,10 +102,29 @@ int main()
 /////////////////////////////////////////////////////////////////////////////////
 
 int isStackPairwiseConsecutive(Stack *s)
-{
-  /* add your code here */
-}
+{	
+	// 스택이 비어있으면 not pairwise consecutive
+	if (s->ll.size == 0) {
+		return 0;
+	}
 
+	// 스택이 홀수면 not pairwise consecutive
+	if (s->ll.size % 2 == 1) {
+		return 0;
+	}
+	// 스택이 짝수면 검사 
+	// 스택이 비어있을 때 까지 반복
+	while (!isEmptyStack(s))
+	{
+		// 비교 값 초기화 
+		int first = pop(s);
+		int second = pop(s);
+		// 두 수의 차가 1이 아니면 not pairwise consecutive
+		if (abs(first - second) != 1) return 0;
+	}
+	// 모든 쌍이 맞았으므로 pairwise consecutive
+	return 1;
+}
 //////////////////////////////////////////////////////////////////////////////////
 
 void push(Stack *s, int item){

@@ -9,6 +9,8 @@ Purpose: Implementing the required functions for Question 7 */
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <limits.h>
+
 //////////////////////////////////////////////////////////////////////////////////
 
 typedef struct _btnode
@@ -102,7 +104,30 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+    // <limits.h> 헤더 추가해서 INT_MAX 사용
+    // INT_MAX -> INT의 수 중 가장 큰 수
+    // 리턴을 0이 아니라 큰 수로 하는 이유 리턴 시 0을 리턴하게되면 0이 가장 작은 값이 되버려서 최솟값은 항상 0이 나오기 때문
+    // 기저 조건
+    if (node == NULL) return INT_MAX;
+
+    // 왼쪽 서브 트리 재귀
+    int leftMin = smallestValue(node->left);
+    // 오른쪽 서브 트리 재귀
+    int rightMin = smallestValue(node->right);
+    // 현재 작은 값은 현재 노드의 값 
+    int currentMin = node->item;
+
+    // 왼쪽에 있는 값이 현재 값보다 작을 때
+    if (leftMin < currentMin) {
+        currentMin = leftMin;
+    }
+    // 오른쪽에 있는 값이 현재 값보다 작을 때 
+    if (rightMin < currentMin) {
+        currentMin = rightMin;
+    }
+    
+    // 현재 작은 값 리턴
+	return currentMin;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

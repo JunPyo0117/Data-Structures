@@ -88,11 +88,41 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 전위 순회 스택으로 작성 
 void preOrderIterative(BSTNode *root)
 {
-	 /* add your code here */
+	// 스택 구조체 동적 할당 및 초기화
+	Stack *myStack = malloc(sizeof(Stack));
+	myStack->top = NULL;
+
+	// current 포인터를 루트 노드로 설정
+	BSTNode *current = root;
+
+	// 트리가 비어있으면 함수 종료
+	if (current == NULL) return;
+
+	// current가 NULL이 아니거나 스택이 비어있지 않을 때까지 반복
+	while (current != NULL || !isEmpty(myStack))
+	{	
+		// 왼쪽 자식이 있을 때까지 내려가며 루트 노드 방문 및 스택에 push
+		while (current)
+		{
+			// 전위 순회: 현재 노드의 값을 출력 (루트 -> 왼쪽 -> 오른쪽 순)
+			printf("%d ", current->item);
+			// 현재 노드를 스택에 push
+			push(myStack, current);
+			// 왼쪽 자식 노드로 이동
+			current = current->left;
+		}
+		// 왼쪽 끝까지 갔으면 스택에서 하나 pop하여 오른쪽 서브트리로 이동
+		current = pop(myStack);
+		current = current->right;
+	}
+
+	// 동적 할당한 스택 메모리 해제
+	free(myStack);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

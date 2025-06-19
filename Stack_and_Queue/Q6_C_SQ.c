@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 6 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MIN_INT -1000
 
@@ -46,6 +47,8 @@ void removeAllItems(LinkedList *ll);
 ListNode * findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
+bool contains(Stack *s, int value);
+
 
 //////////////////////////// main() //////////////////////////////////////////////
 
@@ -109,9 +112,30 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
+bool contains(Stack *s, int value)
+{
+    ListNode *cur = s->ll.head;
+    while (cur != NULL) {
+        if (cur->item == value)
+            return true;
+        cur = cur->next;
+    }
+    return false;
+}
+
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	// 스택이 비어있거나 top이 value이면 함수 종료
+	if (isEmptyStack(s) || peek(s) == value) return;
+
+	// value가 스택에 없으면 함수 종료
+	if (!contains(s, value)) return;
+
+	// top이 value가 될 때까지 pop (스택이 비지 않은 동안 반복)
+	while (!isEmptyStack(s) && peek(s) != value)
+	{
+		pop(s);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////

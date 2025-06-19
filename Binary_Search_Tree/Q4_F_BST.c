@@ -88,11 +88,54 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 후위 순회 스택 큐 작성 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	// 스택 구조체 동적 할당 및 초기화
+	Stack *myStack = malloc(sizeof(Stack));
+	myStack->top = NULL;
+
+	// current: 현재 탐색 중인 노드, prev: 마지막으로 방문한 노드
+	BSTNode *current = root;
+	BSTNode *prev = NULL;
+
+	// 트리가 비어 있으면 종료
+	if (current == NULL) return;
+
+	// current가 NULL이 아니거나 스택이 비어있지 않을 때까지 반복
+	while (current != NULL || !isEmpty(myStack))
+	{
+		// 왼쪽 자식 노드를 따라 스택에 push하며 내려감
+		while (current)
+		{
+			push(myStack, current);
+			current = current->left;
+		}
+		
+		// 스택의 최상단 노드를 확인 (아직 pop하지 않음)
+		current = peek(myStack);
+
+		// 오른쪽 자식이 없거나, 오른쪽 자식을 이미 방문한 경우
+		if (current->right == NULL || current->right == prev) {
+			// 현재 노드를 방문하고 스택에서 제거
+			pop(myStack);
+			printf("%d ", current->item);
+
+			// 방금 방문한 노드를 prev로 업데이트
+			prev = current;
+
+			// 다음 루프에서 다시 peek하지 않도록 current를 NULL로 설정
+			current = NULL;
+		} else {
+			// 오른쪽 자식이 남아 있는 경우, 그쪽으로 이동
+			current = current->right;
+		}
+	}
+
+	// 스택 메모리 해제
+	free(myStack);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -90,11 +90,31 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 트리 레벨 순회
 void levelOrderTraversal(BSTNode* root)
-{
+{	
+	// 큐 구조체 변수 선언 및 초기화
+	Queue *myQueue = malloc(sizeof(Queue));
+	myQueue->head = NULL;
+	myQueue->tail = NULL;
 
-    /* add your code here */
+	// 루트 노드가 NULL이 아니면 큐에 삽입
+	if (root != NULL) enqueue(&(myQueue->head), &(myQueue->tail), root);
+
+	// 큐가 빌 때까지 반복
+	while (!isEmpty(myQueue->head)) {
+		// 큐에서 꺼낸 노드를 temp에 저장
+		BSTNode *temp = dequeue(&(myQueue->head), &(myQueue->tail));
+		// 노드의 값 출력
+		printf("%d ", temp->item);
+
+		// 왼쪽 자식 노드가 있으면 큐에 삽입
+		// 오른쪽 자식 노드가 있으면 큐에 삽입
+		if (temp->left) enqueue(&myQueue->head, &(myQueue->tail), temp->left);
+		if (temp->right) enqueue(&(myQueue->head), &(myQueue->tail), temp->right);
+	}
+	// 동적메모리 해제
+	free(myQueue);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

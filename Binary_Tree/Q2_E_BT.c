@@ -95,9 +95,24 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int maxHeight(BTNode *node)
-
 {
-    /* add your code here */
+    // 노드가 없으면 깊이는 -1 (빈 트리의 높이 정의)
+    if (node == NULL) return -1;
+
+    // 왼쪽, 오른쪽 깊이 순회
+    int leftHight = maxHeight(node->left);
+    int rightHight = maxHeight(node->right);
+    
+    // 현재 높이
+    int currentHeight = 0;
+
+    // +1은 현재 노드를 포함한 높이를 만들기 위해
+    if (leftHight >= rightHight) currentHeight = leftHight+1;
+    // 오른쪽이 더 클 때 
+    else currentHeight = rightHight+1;
+    
+    // 현재 높이 리턴
+    return currentHeight;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

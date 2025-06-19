@@ -38,7 +38,7 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
-	int c, i;
+	int c = 1, i;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
 
@@ -102,7 +102,48 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	// if (ll == NULL || ll->size == 0)
+	// 	return;
+	
+	// // 미드값 구하기
+	// int midCount = (ll->size + 1) / 2;
+
+	// // 첫번째 리스트
+	// for (int i=0;i<midCount;i++){
+	// 	ListNode *node = findNode(ll, i);
+	// 	insertNode(resultFrontList, resultFrontList->size, node->item);
+	// }
+
+	// // 두 번째 리스트
+	// for (int i=midCount;i<ll->size;i++){
+	// 	ListNode *node = findNode(ll, i);
+	// 	insertNode(resultBackList, resultBackList->size, node->item);
+	// }
+
+	// 슬로우, 스타트 선언
+	ListNode *slow = ll->head;
+	ListNode *fast = ll->head->next;
+
+	// 중앙값 구하기
+	while (fast!=NULL && fast->next != NULL)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+
+	// back의 시작은 슬로우 다음 
+	ListNode *backStart = slow->next;
+	// 리스트를 두 개로 분할하기 위해 slow->next를 NULL로 설정
+	slow->next=NULL;
+
+	// 첫 번째, 두 번째 시작 헤드
+	resultFrontList->head = ll ->head;
+	resultBackList->head = backStart;
+
+	// resultFrontList->size = (ll->size + 1) / 2;
+	// resultBackList->size = ll->size - resultFrontList->size;
+	
+	ll->head = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

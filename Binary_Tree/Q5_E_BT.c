@@ -105,7 +105,20 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL) return;
+
+    
+	// 왼쪽 서브 트리 재귀
+    mirrorTree(node->left);
+    // 오른쪽 서브 트리 재귀
+    mirrorTree(node->right);
+
+    // 스왑하기 tmp BTNode 만들어서 왼쪽 값 저장 후 오른쪽 값이랑 스왑
+    BTNode *tmp = node->left;
+    node->left = node->right;
+    node->right = tmp;
+
+    return;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

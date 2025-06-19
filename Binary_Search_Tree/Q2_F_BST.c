@@ -87,10 +87,37 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 스택을 이용한 중위 순회
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	// 스택 구조체 생성 및 초기화
+	Stack *myStack = malloc(sizeof(Stack));
+	myStack->top = NULL;
+	
+	// current 포인터를 루트 노드로 설정
+	BSTNode *current = root;
+
+	// current가 NULL이 아니거나 스택이 비어있지 않을 때까지 반복
+	while (current != NULL || !isEmpty(myStack))
+	{	
+		// current가 NULL이 될 때까지 왼쪽 자식 노드로 이동하며 스택에 push  
+		while (current)
+		{
+			// 스택에 현재 노드 추가
+			push(myStack, current);
+			// current를 왼쪽 자식 노드로 이동
+			current = current->left;
+		}
+		// 왼쪽 끝까지 갔으면 스택에서 노드 하나 꺼냄
+		current = pop(myStack);
+		// 해당 노드의 값 출력 (중위 순회 위치)
+		printf("%d ", current->item);
+		// 오른쪽 서브트리를 탐색하기 위해 current를 오른쪽 자식 노드로 이동
+		current = current->right;
+
+	}
+	// 동적 할당 메모리 해제
+	free(myStack);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
